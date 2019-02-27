@@ -5,18 +5,22 @@
  */
 package drag.and.drop3;
 
+import java.awt.Graphics;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import static javafx.scene.paint.Color.*;
 import javafx.scene.shape.Rectangle;
 
@@ -26,10 +30,19 @@ import javafx.scene.shape.Rectangle;
  */
 public class FXMLDocumentController implements Initializable {
     
-     private ArrayList<Rectangle> list = new ArrayList<>();
-    private Label label;
-    private AnchorPane gameArea;
     
+    private ArrayList<Rectangle> list = new ArrayList<>();
+    private Label label;
+    private int index = 0;
+    @FXML
+    private AnchorPane GameArea;
+    @FXML
+    private TextField heightField;
+    @FXML
+    private TextField widthField;
+    @FXML
+    private ColorPicker colorPicker;
+
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
@@ -37,38 +50,60 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        
     }    
 
     @FXML
     private void addRectangle(ActionEvent event) {
-        double height, width;
-        height = 20;//Double.parseDouble(heightField.getText());
-        width = 20;//Double.parseDouble(widthField.getText());
+        System.out.println("addRectangle called");
+        MyRectangle rec = new MyRectangle(index);
+        index++;
+        System.out.println("makeSquare: " + index);
         
-        Rectangle rec = new Rectangle();
+        rec.setHeight(Double.parseDouble(heightField.getText()));
+        rec.setWidth(Double.parseDouble(widthField.getText()));
         
-        rec.setHeight(height);
-        rec.setWidth(width);
-        
-        rec.setFill(DODGERBLUE);
+        rec.setFill(colorPicker.getValue());
+        System.out.println("2");
         rec.setOnMouseReleased((MouseEvent e) -> {
             Node n = (Node) e.getSource();
             Bounds b = n.getBoundsInParent();
 
-            //System.out.println("X: " + b.getMaxX() + "Y: " + b.getMaxY());
+            System.out.println("X: " + b.getMaxX() + "Y: " + b.getMaxY());
 
             e.consume();
         });
+        
+        rec.onMouseClickedProperty().set(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent arg0)
+            {
+                heightField.setText(Double.toString(rec.getHeight()));
+                widthField.setText(Double.toString(rec.getWidth()));
+                System.out.println();
+                colorPicker.setValue(Color.web(rec.getFill().toString()));
+                
+            }
+        });
+
+        System.out.println("3");
         rec.setOnMouseDragged((MouseEvent e) -> {
             Node n = (Node) e.getSource();
-            n.setTranslateX(n.getTranslateX() + e.getX());
-            n.setTranslateY(n.getTranslateY() + e.getY());
-            
+            double Xco = n.getTranslateX() + e.getX();
+            double Yco = n.getTranslateY() + e.getY();
+                    
+            n.setTranslateX(Xco);
+            n.setTranslateY(Yco);
+            rec.setXandY(Xco, Yco);
             e.consume();
         });
+        System.out.println("4");
+        
+        System.out.println("5");
+        GameArea.getChildren().add(rec);
+        System.out.println("6");
         list.add(rec);
-        gameArea.getChildren().add(rec);
     }
 
     @FXML
