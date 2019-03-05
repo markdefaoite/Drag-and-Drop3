@@ -31,7 +31,7 @@ import javafx.scene.shape.Rectangle;
 public class FXMLDocumentController implements Initializable {
     
     
-    private ArrayList<Rectangle> list = new ArrayList<>();
+    private ArrayList<MyRectangle> obstacleList = new ArrayList<>();
     private Label label;
     private int index = 0;
     @FXML
@@ -103,11 +103,14 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("5");
         GameArea.getChildren().add(rec);
         System.out.println("6");
-        list.add(rec);
+        obstacleList.add(rec);
     }
 
     @FXML
-    private void buildGame(ActionEvent event) {
+    private void buildGame(ActionEvent event) 
+    {
+        Builder builder = new Builder();
+        builder.build(obstacleList);
     }
     
    
