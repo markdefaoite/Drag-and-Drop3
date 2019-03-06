@@ -32,7 +32,7 @@ public class FXMLDocumentController implements Initializable {
     
     
     private ArrayList<MyRectangle> obstacleList = new ArrayList<>();
-    private Label label;
+    private ArrayList<MyRectangle> playerList = new ArrayList<>();
     private int index = 0;
     @FXML
     private AnchorPane GameArea;
@@ -42,11 +42,15 @@ public class FXMLDocumentController implements Initializable {
     private TextField widthField;
     @FXML
     private ColorPicker colorPicker;
-
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    @FXML
+    private TextField playerHeight;
+    
+    @FXML
+    private TextField playerWidth;
+    @FXML
+    private ColorPicker playerColor;
+    private MyRectangle playerPiece = null;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -56,17 +60,46 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void addRectangle(ActionEvent event) {
-        System.out.println("addRectangle called");
+        double height = Double.parseDouble(heightField.getText());
+        double width = Double.parseDouble(widthField.getText());
+        Color color = colorPicker.getValue();
+        MyRectangle rec = makeRectangle(height, width, color);
+        obstacleList.add(rec);
+    }
+
+    @FXML
+    private void buildGame(ActionEvent event) 
+    {
+        Builder builder = new Builder();
+        builder.build(obstacleList, playerPiece);
+    }
+
+    @FXML
+    private void addPlayer(ActionEvent event) {
+        double height = Double.parseDouble(playerHeight.getText());
+        double width = Double.parseDouble(playerWidth.getText());
+        Color color = playerColor.getValue();
+        MyRectangle player = makeRectangle(height, width, color);
+        //playerList.add(player);
+        if(playerPiece != null){
+            System.out.println("Player piece overwritten");
+        }
+        
+        playerPiece = player;
+    }
+    
+   private MyRectangle makeRectangle(double height, double width, Color color){
+       
         MyRectangle rec = new MyRectangle(index);
         index++;
-        System.out.println("makeSquare: " + index);
         
-        rec.setHeight(Double.parseDouble(heightField.getText()));
-        rec.setWidth(Double.parseDouble(widthField.getText()));
         
-        rec.setFill(colorPicker.getValue());
+        rec.setHeight(height);
+        rec.setWidth(width);
+        
+        rec.setFill(color);
         System.out.println(rec.getColor());
-        System.out.println("2");
+        
         rec.setOnMouseReleased((MouseEvent e) -> {
             Node n = (Node) e.getSource();
             Bounds b = n.getBoundsInParent();
@@ -81,14 +114,17 @@ public class FXMLDocumentController implements Initializable {
             public void handle(MouseEvent arg0)
             {
                 heightField.setText(Double.toString(rec.getHeight()));
+                playerHeight.setText(Double.toString(rec.getHeight()));
                 widthField.setText(Double.toString(rec.getWidth()));
+                playerWidth.setText(Double.toString(rec.getWidth()));
                 System.out.println();
                 colorPicker.setValue(Color.web(rec.getFill().toString()));
+                playerColor.setValue(Color.web(rec.getFill().toString()));
                 
             }
         });
 
-        System.out.println("3");
+        
         rec.setOnMouseDragged((MouseEvent e) -> {
             Node n = (Node) e.getSource();
             double Xco = n.getTranslateX() + e.getX();
@@ -99,21 +135,10 @@ public class FXMLDocumentController implements Initializable {
             rec.setXandY(Xco, Yco);
             e.consume();
         });
-        System.out.println("4");
         
-        System.out.println("5");
         GameArea.getChildren().add(rec);
-        System.out.println("6");
-        obstacleList.add(rec);
-    }
-
-    @FXML
-    private void buildGame(ActionEvent event) 
-    {
-        Builder builder = new Builder();
-        builder.build(obstacleList);
-    }
-    
-   
+        
+        return rec;
+   }
     
 }

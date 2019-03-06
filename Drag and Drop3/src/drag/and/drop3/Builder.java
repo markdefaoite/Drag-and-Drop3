@@ -20,27 +20,30 @@ import java.util.logging.Logger;
  */
 public class Builder {
 
-    void build(ArrayList<MyRectangle> list) {
+    void build(ArrayList<MyRectangle> obstaclesList, MyRectangle myGamePiece) {
 
         System.out.println("build() called");
-        System.out.println(list.size());
+        System.out.println(obstaclesList.size());
         int subIdentifierCounter = 0;
         char identifier = 'A', subIdentifier = 'A';
         BufferedReader reader = null;
         FileWriter writer = null;
 
         try {
-            System.out.println("B:1");
+            
             reader = new BufferedReader(new FileReader("index.html"));
             writer = new FileWriter("output.html");
             String line = reader.readLine();
             String componentIntialize = "", componentDeclare = "", componentUpdate = "";
-            System.out.println("B:2");
-            for (int i = 0; i < list.size(); i++) {
+            if(myGamePiece != null)
+                componentIntialize += "myGamePiece = new component("+ myGamePiece.getWidth()+", "+ myGamePiece.getHeight()+", \""+myGamePiece.getColor()+"\", "
+                        +myGamePiece.getXcoord()+", "+myGamePiece.getYcoord()+", 0, 0); \n";
+            
+            for (int i = 0; i < obstaclesList.size(); i++) {
                 componentDeclare += " var Obstacle" + identifier + subIdentifier + "; \n";
                 System.out.println("B:3");
-                componentIntialize += "obstacles.push(Obstacle" + identifier + subIdentifier + " = new component(" + list.get(i).getWidth() + ", " + list.get(i).getHeight() + ",\""+list.get(i).getColor() + "\", "
-                        + list.get(i).Xcoord + ", " + list.get(i).Ycoord + "));" + "\n";
+                componentIntialize += "obstacles.push(Obstacle" + identifier + subIdentifier + " = new component(" + obstaclesList.get(i).getWidth() + ", " + obstaclesList.get(i).getHeight() + ",\""+obstaclesList.get(i).getColor() + "\", "
+                        + obstaclesList.get(i).Xcoord + ", " + obstaclesList.get(i).Ycoord + "));" + "\n";
                 
                 componentUpdate += "Obstacle" + identifier + subIdentifier + ".update(); \n";
                 
