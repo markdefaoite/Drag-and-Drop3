@@ -12,12 +12,14 @@
     </head>
     <body onload="startGame()">
         <script>
+
             var myGamePiece;
-            var myObstacle;
             
+            var obstacles = [];
             function startGame() {
-             myGamePiece = new component(30, 30, "red", 10, 120, 0, 0);
-             myObstacle = new component(50, 50, "green", 250, 150, 0, 0);
+<!-- component intialize --> 
+				
+				
                 myGameArea.start();
             };
             
@@ -120,7 +122,6 @@
                     var othertop = otherobj.y;
                     var otherbottom = otherobj.y + (otherobj.height);
                     var crash = false;
-
                     if ((myleft < otherright) && (myright > otherleft) && (mytop < otherbottom) && (mybottom > othertop)) {
                         crash = true;
                     }
@@ -130,11 +131,12 @@
                 
             function updateGameArea() {
                 var x, y;
+                for (i = 0; i < obstacles.length; i += 1) {
+					if (myGamePiece.crashWith(obstacles[i])){
+						myGamePiece.collisionDirection(obstacles[i]);
+					}
+				}
                 
-                if (myGamePiece.crashWith(myObstacle)) {
-                    myObstacle.stop();
-                    myGamePiece.collisionDirection(myObstacle);
-                }
               
                 myGameArea.clear();
                 myGamePiece.stop();
@@ -151,7 +153,10 @@
                 if (myGameArea.keys && myGameArea.keys[40]) {movedown(); }
                 myGamePiece.newPos();
                 myGamePiece.update();
-                
+				for (i = 0; i < obstacles.length; i += 1) {
+					
+					obstacles[i].update();
+				}
                 myObstacle.update();
             };  
                 
@@ -167,17 +172,14 @@
                 myGamePiece.speedY = -2;
             }
             ;
-
             function movedown() {
                 myGamePiece.speedY = 2;
             }
             ;
-
             function moveleft() {
                 myGamePiece.speedX = -2;
             }
             ;
-
             function moveright() {
                 myGamePiece.speedX = 2;
             }
