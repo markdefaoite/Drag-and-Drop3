@@ -65,6 +65,7 @@ public class FXMLDocumentController implements Initializable {
         rec.setWidth(Double.parseDouble(widthField.getText()));
         
         rec.setFill(colorPicker.getValue());
+        System.out.println(rec.getColor());
         System.out.println("2");
         rec.setOnMouseReleased((MouseEvent e) -> {
             Node n = (Node) e.getSource();

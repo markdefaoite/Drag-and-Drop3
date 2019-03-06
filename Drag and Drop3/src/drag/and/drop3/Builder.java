@@ -39,7 +39,7 @@ public class Builder {
             for (int i = 0; i < list.size(); i++) {
                 componentDeclare += " var Obstacle" + identifier + subIdentifier + "; \n";
                 System.out.println("B:3");
-                componentIntialize += "obstacles.push(Obstacle" + identifier + subIdentifier + " = new component(" + list.get(i).getWidth() + ", " + list.get(i).getHeight() + ",\"red\", "
+                componentIntialize += "obstacles.push(Obstacle" + identifier + subIdentifier + " = new component(" + list.get(i).getWidth() + ", " + list.get(i).getHeight() + ",\""+list.get(i).getColor() + "\", "
                         + list.get(i).Xcoord + ", " + list.get(i).Ycoord + "));" + "\n";
                 
                 componentUpdate += "Obstacle" + identifier + subIdentifier + ".update(); \n";

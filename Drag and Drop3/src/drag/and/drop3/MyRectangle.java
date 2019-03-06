@@ -42,4 +42,16 @@ public class MyRectangle extends Rectangle {
     public int getIntId() {
         return id;
     }
+    
+    public String getColor(){
+        String fill = this.getFill().toString();
+        char[] chars = fill.toCharArray();
+        String out ="#";
+        for(int x = 2; x <chars.length;x++){
+            out += chars[x];
+        }
+        
+        return out;
+        
+    }
 }
