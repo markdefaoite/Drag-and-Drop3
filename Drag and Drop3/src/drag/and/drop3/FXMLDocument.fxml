@@ -31,7 +31,7 @@
                   </AnchorPane>
             </content>
           </TitledPane>
-          <TitledPane animated="false" text="untitled 2">
+          <TitledPane animated="false" text="Player Game Piece">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -45,9 +45,18 @@
                      </children></AnchorPane>
             </content>
           </TitledPane>
-          <TitledPane animated="false" text="untitled 3">
+          <TitledPane animated="false" text="collectibles">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="50.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="50.0" />
+                        <TextField fx:id="collectHeight" layoutX="100.0" layoutY="78.0" prefHeight="25.0" prefWidth="61.0" promptText="20" text="20" />
+                        <TextField fx:id="collectWidth" layoutX="100.0" layoutY="118.0" prefHeight="25.0" prefWidth="61.0" promptText="20" text="20" />
+                        <Label layoutX="25.0" layoutY="78.0" prefHeight="25.0" prefWidth="51.0" text="Height" />
+                        <Label layoutX="25.0" layoutY="118.0" prefHeight="25.0" prefWidth="51.0" text="Width" />
+                        <Button id="addPlayer" layoutX="32.0" layoutY="168.0" mnemonicParsing="false" onAction="#addCollectible" text="Add To Game" />
+                        <ColorPicker fx:id="collectColor" editable="true" layoutX="25.0" layoutY="230.0" />
+                     </children></AnchorPane>
             </content>
           </TitledPane>
         </panes>

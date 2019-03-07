@@ -50,6 +50,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ColorPicker playerColor;
     private MyRectangle playerPiece = null;
+    @FXML
+    private TextField collectHeight;
+    @FXML
+    private TextField collectWidth;
+    @FXML
+    private ColorPicker collectColor;
     
     
     @Override
@@ -140,5 +146,9 @@ public class FXMLDocumentController implements Initializable {
         
         return rec;
    }
+
+    @FXML
+    private void addCollectible(ActionEvent event) {
+    }
     
 }
