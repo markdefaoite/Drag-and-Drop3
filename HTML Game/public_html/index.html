@@ -14,8 +14,9 @@
         <script>
 
             var myGamePiece;
-            
+            var score = 0;
             var obstacles = [];
+			var collectibles =[];
             function startGame() {
 <!-- component intialize --> 
 				
@@ -130,13 +131,20 @@
             };
                 
             function updateGameArea() {
-                var x, y;
+                document.getElementById("scoreDisplay").innerHTML = "SCORE: " + score;
+				var x, y;
                 for (i = 0; i < obstacles.length; i += 1) {
 					if (myGamePiece.crashWith(obstacles[i])){
 						myGamePiece.collisionDirection(obstacles[i]);
 					}
 				}
-                
+                for (i = 0; i < collectibles.length; i += 1) {
+					if (myGamePiece.crashWith(collectibles[i])){
+						collectibles.pop();
+						score += 10;
+						
+					}
+				}
               
                 myGameArea.clear();
                 myGamePiece.stop();
@@ -157,7 +165,10 @@
 					
 					obstacles[i].update();
 				}
-                myObstacle.update();
+                for (i = 0; i < collectibles.length; i += 1) {
+					
+					collectibles[i].update();
+				}
             };  
                 
             function everyinterval(n) {
@@ -186,6 +197,6 @@
             ;   
                
         </script>
-        
+        <p id="scoreDisplay"></p>
     </body>
 </html>
