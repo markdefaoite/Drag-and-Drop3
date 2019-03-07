@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class Builder {
 
-    void build(ArrayList<MyRectangle> obstaclesList, MyRectangle myGamePiece) {
+    void build(ArrayList<MyRectangle> obstaclesList, MyRectangle myGamePiece, ArrayList<MyRectangle> collectList) {
 
         System.out.println("build() called");
         System.out.println(obstaclesList.size());
@@ -46,6 +46,23 @@ public class Builder {
                         + obstaclesList.get(i).Xcoord + ", " + obstaclesList.get(i).Ycoord + "));" + "\n";
                 
                 componentUpdate += "Obstacle" + identifier + subIdentifier + ".update(); \n";
+                
+                subIdentifierCounter++;
+                if (subIdentifierCounter > 25) {
+                    subIdentifierCounter = 0;
+                    subIdentifier = 'A';
+                    identifier++;
+                } else {
+                    subIdentifier++;
+                }
+            }
+            for (int i = 0; i < collectList.size(); i++) {
+                componentDeclare += " var Collectible" + identifier + subIdentifier + "; \n";
+                
+                componentIntialize += "collectibles.push(Obstacle" + identifier + subIdentifier + " = new component(" + collectList.get(i).getWidth() + ", " + collectList.get(i).getHeight() + ",\""+collectList.get(i).getColor() + "\", "
+                        + collectList.get(i).Xcoord + ", " + collectList.get(i).Ycoord + "));" + "\n";
+                
+                componentUpdate += "Collectible" + identifier + subIdentifier + ".update(); \n";
                 
                 subIdentifierCounter++;
                 if (subIdentifierCounter > 25) {

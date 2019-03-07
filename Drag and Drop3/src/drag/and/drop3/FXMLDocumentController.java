@@ -33,6 +33,7 @@ public class FXMLDocumentController implements Initializable {
     
     private ArrayList<MyRectangle> obstacleList = new ArrayList<>();
     private ArrayList<MyRectangle> playerList = new ArrayList<>();
+    private ArrayList<MyRectangle> collectList = new ArrayList<>();
     private int index = 0;
     @FXML
     private AnchorPane GameArea;
@@ -77,7 +78,7 @@ public class FXMLDocumentController implements Initializable {
     private void buildGame(ActionEvent event) 
     {
         Builder builder = new Builder();
-        builder.build(obstacleList, playerPiece);
+        builder.build(obstacleList, playerPiece, collectList);
     }
 
     @FXML
@@ -123,10 +124,12 @@ public class FXMLDocumentController implements Initializable {
                 playerHeight.setText(Double.toString(rec.getHeight()));
                 widthField.setText(Double.toString(rec.getWidth()));
                 playerWidth.setText(Double.toString(rec.getWidth()));
+                collectHeight.setText(Double.toString(rec.getHeight()));
+                collectWidth.setText(Double.toString(rec.getWidth()));
                 System.out.println();
                 colorPicker.setValue(Color.web(rec.getFill().toString()));
                 playerColor.setValue(Color.web(rec.getFill().toString()));
-                
+                collectColor.setValue(Color.web(rec.getFill().toString()));
             }
         });
 
@@ -149,6 +152,11 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void addCollectible(ActionEvent event) {
+        double height = Double.parseDouble(collectHeight.getText());
+        double width = Double.parseDouble(collectWidth.getText());
+        Color color = collectColor.getValue();
+        MyRectangle rec = makeRectangle(height, width, color);
+        collectList.add(rec);
     }
     
 }
