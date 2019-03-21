@@ -20,8 +20,10 @@ import java.util.logging.Logger;
  */
 public class Builder {
 
-    void build(ArrayList<MyRectangle> obstaclesList, MyRectangle myGamePiece, ArrayList<MyRectangle> collectList) {
-
+    void build(String title, ArrayList<MyRectangle> obstaclesList, MyRectangle myGamePiece, ArrayList<MyRectangle> collectList) {
+        if(title == null)
+            title = "HTML Game";
+        String fileName = title + ".html";
         System.out.println("build() called");
         System.out.println(obstaclesList.size());
         int subIdentifierCounter = 0;
@@ -32,7 +34,7 @@ public class Builder {
         try {
             
             reader = new BufferedReader(new FileReader("index.html"));
-            writer = new FileWriter("output.html");
+            writer = new FileWriter(fileName);
             String line = reader.readLine();
             String componentIntialize = "", componentDeclare = "", componentUpdate = "";
             if(myGamePiece != null)
@@ -79,7 +81,9 @@ public class Builder {
             } else {
                 System.out.println("B:5");
                 while (line != null) {
-                    
+                    if (line.equals("<!-- title -->")) {
+                        writer.append(title + "\n");
+                    }
                     if (line.equals("<!-- component declare -->")) {
                         System.out.println(line + "\n" + componentDeclare);
                         writer.append(componentDeclare + "\n");

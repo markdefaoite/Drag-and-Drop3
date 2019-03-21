@@ -70,7 +70,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField id="gameTitle" layoutX="36.0" layoutY="39.0" />
+                        <TextField id="gameTitle" fx:id="gameTitle" layoutX="36.0" layoutY="39.0" />
                         <Label layoutX="36.0" layoutY="14.0" text="Game Title" />
                         <Button id="buildButton" layoutX="74.0" layoutY="85.0" mnemonicParsing="false" onAction="#buildGame" text="Build" />
                      </children></AnchorPane>

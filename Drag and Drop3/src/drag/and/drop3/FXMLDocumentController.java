@@ -57,6 +57,8 @@ public class FXMLDocumentController implements Initializable {
     private TextField collectWidth;
     @FXML
     private ColorPicker collectColor;
+    @FXML
+    private TextField gameTitle;
     
     
     @Override
@@ -77,8 +79,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void buildGame(ActionEvent event) 
     {
+        String title = gameTitle.getText();
         Builder builder = new Builder();
-        builder.build(obstacleList, playerPiece, collectList);
+        builder.build(title, obstacleList, playerPiece, collectList);
     }
 
     @FXML
